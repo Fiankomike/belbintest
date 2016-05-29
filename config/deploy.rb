@@ -2,7 +2,7 @@
 lock '3.5.0'
 
 set :application, 'belbintest'
-set :repo_url, 'git@github.com:fiankomike/belbintest.git'
+set :repo_url, 'https://github.com/Fiankomike/belbintest.git'
 
 set :deploy_to, '/home/webgrah/belbintest'
 
