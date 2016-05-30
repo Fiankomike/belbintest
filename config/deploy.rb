@@ -4,6 +4,8 @@ lock '3.5.0'
 set :application, 'belbintest'
 set :repo_url, 'https://github.com/Fiankomike/belbintest.git'
 
+set :passenger_restart_with_touch, true
+
 set :deploy_to, '/home/webgrah/belbintest'
 
 set :linked_files, %w{config/database.yml config/secrets.yml}
