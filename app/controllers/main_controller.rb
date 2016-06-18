@@ -35,12 +35,20 @@ class MainController < ApplicationController
   	@messagetext = params[:text]
   	@messagetimestamp = params[:'message-timestamp']
 
-  	if @messagerecipient == nil
-  		p "Nothing to show"
-  	else
-  		response = nexmo.send_message(from: "+46769439898", to: '+233243200950', text: @messagetext + " " + 
-  			@messagekeyword + " " + @messagemsisdn + " " + @messagerecipient + " " + @messagetimestamp)
-  	end
+  	newsms = GetSms.new
+  	newsms.recipients = @messagerecipient
+  	newsms.msisdn = @messagemsisdn
+  	newsms.keyword = @messagekeyword
+  	newsms.smstext = @messagetext
+  	newsms.messagetimestamp = @messagetimestamp
+  	newsms.save
+
+  	# if @messagerecipient == nil
+  	# 	p "Nothing to show"
+  	# else
+  	# 	response = nexmo.send_message(from: "+46769439898", to: '+233243200950', text: @messagetext + " " + 
+  	# 		@messagekeyword + " " + @messagemsisdn + " " + @messagerecipient + " " + @messagetimestamp)
+  	# end
   	
 
   	#response = nexmo.send_message(from: '+46769439898', to: '+233243200950', text: 'Photoshop')
