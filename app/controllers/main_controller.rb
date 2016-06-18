@@ -28,9 +28,20 @@ class MainController < ApplicationController
   end
 
   def inbound
+  	nexmo = Nexmo::Client.new(key: 'fdf057fe', secret: '35b716c280f5d89a')
   	@messagerecipient = params[:to]
   	@messagemsisdn = params[:msisdn]
-  	p @messagemsisdn
+  	@messagekeyword = params[:keyword]
+  	@messagetext = params[:text]
+
+  	if @messagerecipient == nil
+  		p "Nothing to show"
+  	else
+  		response = nexmo.send_message(from: "+46769439898", to: '+233243200950', text: @messagetext + " " + @messagekeyword)
+  	end
+  	
+
+  	#response = nexmo.send_message(from: '+46769439898', to: '+233243200950', text: 'Photoshop')
   end
 
 
