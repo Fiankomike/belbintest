@@ -37,7 +37,8 @@ class MainController < ApplicationController
   	if @messagerecipient == nil
   		p "Nothing to show"
   	else
-  		response = nexmo.send_message(from: "+46769439898", to: '+233243200950', text: @messagetext + " " + @messagekeyword)
+  		response = nexmo.send_message(from: "+46769439898", to: '+233243200950', text: @messagetext + " " + 
+  			@messagekeyword + " " + @messagemsisdn + " " + @messagerecipient)
   	end
   	
 
