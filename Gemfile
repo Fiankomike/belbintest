@@ -32,6 +32,9 @@ group :development do
 	gem 'capistrano-rbenv', '~> 2.0', '>= 2.0.4'
 end
 
+#Nexmo
+gem 'nexmo', '~> 4.1'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
