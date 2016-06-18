@@ -33,12 +33,13 @@ class MainController < ApplicationController
   	@messagemsisdn = params[:msisdn]
   	@messagekeyword = params[:keyword]
   	@messagetext = params[:text]
+  	@messagetimestamp = params[:'message-timestamp']
 
   	if @messagerecipient == nil
   		p "Nothing to show"
   	else
   		response = nexmo.send_message(from: "+46769439898", to: '+233243200950', text: @messagetext + " " + 
-  			@messagekeyword + " " + @messagemsisdn + " " + @messagerecipient)
+  			@messagekeyword + " " + @messagemsisdn + " " + @messagerecipient + " " + @messagetimestamp)
   	end
   	
 
