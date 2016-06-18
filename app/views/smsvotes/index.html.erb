@@ -1,0 +1,42 @@
+<div class="container-fluid">
+<div class="row-fluid">
+	<!-- Header -->
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="text-center">Vote Count</h1>
+		</div>
+	</div>
+
+	<!-- Table -->
+	
+	<div class="row">
+		<div class="table-responsive">
+			<table class="table">
+	  			<tr>
+	  				<th>#</th>
+	  				<th>From</th>
+	  				<th>To</th>
+	  				<th>Center</th>
+	  				<th>Message</th>
+	  				<th>Date/Time</th>
+	  			</tr>
+
+	  	<% @allsmsvotes.each do |smsvotes| %>
+
+	  			<tr>
+	  				<td><%= smsvotes.id %></td>
+	  				<td><%=smsvotes.msisdn %></td>
+	  				<td><%=smsvotes.recipients %></td>
+	  				<td><%=smsvotes.keyword %></td>
+	  				<td><%=smsvotes.smstext %></td>
+	  				<td><%=smsvotes.messagetimestamp %></td>
+	  			</tr>
+
+	  		<% end %>
+	
+			</table>
+		<div>
+	</div>
+
+</div>
+</div>
