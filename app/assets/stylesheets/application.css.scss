@@ -17,3 +17,14 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.table-hover tbody tr:hover td {
+    background: aqua;
+}
+
+.mygrid-wrapper-div {
+    overflow: scroll;
+    height: 180px;
+    margin-right: -15px;
+    margin-left: -15px;
+}

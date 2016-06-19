@@ -12,7 +12,7 @@ class MainController < ApplicationController
 
   def outbound
 
-  	nexmo = Nexmo::Client.new(key: 'fdf057fe', secret: '35b716c280f5d89a')
+  	#nexmo = Nexmo::Client.new(key: 'fdf057fe', secret: '35b716c280f5d89a')
 
   	#response = nexmo.send_message(from: '+46769439898', to: '+233243200950', text: 'Photoshop')
 
@@ -53,6 +53,7 @@ class MainController < ApplicationController
         newresult.typeofelection = @splittxt[1]
         newresult.partyorcandidate = @splittxt[i]
         newresult.votes = @splittxt[i+1]
+        newresult.save
       else
         next
       end
