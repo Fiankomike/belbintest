@@ -28,7 +28,7 @@ class MainController < ApplicationController
   end
 
   def inbound
-  	nexmo = Nexmo::Client.new(key: 'fdf057fe', secret: '35b716c280f5d89a')
+  	#nexmo = Nexmo::Client.new(key: 'fdf057fe', secret: '35b716c280f5d89a')
   	@messagerecipient = params[:to]
   	@messagemsisdn = params[:msisdn]
   	@messagekeyword = params[:keyword]
@@ -36,14 +36,15 @@ class MainController < ApplicationController
     #@messagetext = "Hello world"
   	@messagetimestamp = params[:'message-timestamp']
 
-
-  	newsms = GetSms.new
-  	newsms.recipients = @messagerecipient
-  	newsms.msisdn = @messagemsisdn
-  	newsms.keyword = @messagekeyword
-  	newsms.smstext = @messagetext
-  	newsms.messagetimestamp = @messagetimestamp
-  	newsms.save
+    if !@messagetext.blank?
+    	newsms = GetSms.new
+    	newsms.recipients = @messagerecipient
+    	newsms.msisdn = @messagemsisdn
+    	newsms.keyword = @messagekeyword
+    	newsms.smstext = @messagetext
+    	newsms.messagetimestamp = @messagetimestamp
+    	newsms.save
+    end
 
     if !@messagetext.blank?
       @splittxt = @messagetext.split(/\W+/)
