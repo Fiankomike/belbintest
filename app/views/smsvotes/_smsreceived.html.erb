@@ -9,12 +9,12 @@
 			<div class="table-responsive" style="margin-bottom: -15px;">
 				<table class="table table-striped table-hover">
 		  			<tr>
-		  				<th>#</th>
-		  				<th>From</th>
-		  				<th>To</th>
-		  				<th>PS Code</th>
-		  				<th>Message</th>
-		  				<th>Date/Time</th>
+		  				<th width="5%">#</th>
+		  				<th width="15%">From</th>
+		  				<th width="15%">To</th>
+		  				<th width="15%">PS Code</th>
+		  				<th width="35%">Message</th>
+		  				<th width="15%">Date/Time</th>
 	  				</tr>		  		
 	  			</table>
 		  	</div>
@@ -37,12 +37,12 @@
 	  	<% @allsms.each do |smsvotes| %>
 
 	  			<tr>
-	  				<td><%= smsvotes.id %></td>
-	  				<td><%=smsvotes.msisdn %></td>
-	  				<td><%=smsvotes.recipients %></td>
-	  				<td><%=smsvotes.keyword %></td>
-	  				<td><%=smsvotes.smstext %></td>
-	  				<td><%=smsvotes.messagetimestamp %></td>
+	  				<td width="5%"><%= smsvotes.id %></td>
+	  				<td width="15%"><%=smsvotes.msisdn %></td>
+	  				<td width="15%"><%=smsvotes.recipients %></td>
+	  				<td width="15%"><%=smsvotes.keyword %></td>
+	  				<td width="35%"><%=smsvotes.smstext %></td>
+	  				<td width="15%"<%=smsvotes.messagetimestamp %></td>
 	  			</tr>
 
 	  		<% end %>
