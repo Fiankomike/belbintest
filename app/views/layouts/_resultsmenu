@@ -1,0 +1,11 @@
+<div class="btn-group">
+	  			<button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	    			View Results per <span class="caret"></span>
+	  			</button>
+	  			<ul class="dropdown-menu">
+	    			<li><a href="/smsvotes/collatedresults">Electoral Area</a></li>
+	    			<li><a href="/smsvotes/collatedresultsconst">Constituency</a></li>
+	    			<li><a href="/smsvotes/collatedresultsregional">Region</a></li>
+	    			<li><a href="/smsvotes/collatedresultsnational">National Scale</a></li>
+	  			</ul>
+			</div>

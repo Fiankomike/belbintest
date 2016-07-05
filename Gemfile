@@ -39,6 +39,10 @@ gem 'nexmo', '~> 4.1'
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
+#D3.js Installation
+gem 'd3_rails', '~> 3.5', '>= 3.5.16'
+gem 'pry', '~> 0.10.3'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

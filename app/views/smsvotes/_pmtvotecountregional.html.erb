@@ -11,28 +11,25 @@
 			<div class="table-responsive">
 				<table class="table table-striped table-bordered table-hover">
 		  			<tr>
-		  				<th>Electoral Area</th>
-		  				<th>Candidate</th>
+		  				<th>Region</th>
 		  				<th>Party</th>
-		  				<th>Total Votes </th>
+		  				<th>Total Seats Won </th>
 		  			</tr>
 
 		  	
-		  	<% pmttotal = Electoraldatum.joins(:voteresults).where('typeofelection = "PAL"').group(:electoralarea, :candidate, :party).sum(:votes) %>
-		  	<% percentagetotal =Electoraldatum.joins(:voteresults).where('typeofelection = "PAL"').group(:electoralarea).sum(:votes) %>
+		  	<% pmttotal = Electoraldatum.joins(:voteresults).where('typeofelection = "PAL"').group(:region, :candidate, :party).sum(:votes) %>
 		  	<% m = "" %>
 		  	<% pmttotal.each do |smsvotes| %>
 
 		  			<tr>
 		  				<td><strong><%= if m != smsvotes[0][0] then smsvotes[0][0] end %></strong></td>
 		  				<% m = smsvotes[0][0] %>
-		  				<td><%=smsvotes[0][1] %></td>
 		  				<td><%=smsvotes[0][2]%></td>
-		  				<td><%=smsvotes[1] %></td>		
+		  				<td><%=smsvotes[1] %></td>
 		  			</tr>
 
 		  		<% end %>
-						
+		
 				</table>
 			</div>
 	</div>

@@ -1,26 +1,26 @@
-<!-- ########  Presidential VOTE COUNT ###### -->
+<!-- ########  Parliamentary VOTE COUNT ###### -->
 	<!-- Header -->
-		<div class="row">
-			<h1 class="text-center">Presidential</h1>
-		</div>
+	<div class="row">
+			<h1 class="text-center">Parliamentary</h1>
+	</div>
 
 
-
-		<!-- Presidential Table -->
+		<!-- Parliamentary Table -->
 	
-		<div class="row">
+	<div class="row">
 			<div class="table-responsive">
-				<table class="table table-striped table-hover">
+				<table class="table table-striped table-bordered table-hover">
 		  			<tr>
-		  				<th>Electoral Area</th>
+		  				<th>Constituency</th>
 		  				<th>Candidate</th>
 		  				<th>Party</th>
 		  				<th>Total Votes </th>
 		  			</tr>
 
-		  	<% pretotal = Electoraldatum.joins(:voteresults).where('typeofelection = "PRE"').group(:electoralarea, :candidate, :party).sum(:votes) %>
+		  	
+		  	<% pmttotal = Electoraldatum.joins(:voteresults).where('typeofelection = "PAL"').group(:Constituency, :candidate, :party).sum(:votes) %>
 		  	<% m = "" %>
-		  	<% pretotal.each do |smsvotes| %>
+		  	<% pmttotal.each do |smsvotes| %>
 
 		  			<tr>
 		  				<td><strong><%= if m != smsvotes[0][0] then smsvotes[0][0] end %></strong></td>
@@ -34,4 +34,4 @@
 		
 				</table>
 			</div>
-		</div>
+	</div>

@@ -12,13 +12,13 @@
 			<div class="table-responsive">
 				<table class="table table-striped table-hover">
 		  			<tr>
-		  				<th>Electoral Area</th>
+		  				<th>Constituency</th>
 		  				<th>Candidate</th>
 		  				<th>Party</th>
 		  				<th>Total Votes </th>
 		  			</tr>
 
-		  	<% pretotal = Electoraldatum.joins(:voteresults).where('typeofelection = "PRE"').group(:electoralarea, :candidate, :party).sum(:votes) %>
+		  	<% pretotal = Electoraldatum.joins(:voteresults).where('typeofelection = "PRE"').group(:Constituency, :candidate, :party).sum(:votes) %>
 		  	<% m = "" %>
 		  	<% pretotal.each do |smsvotes| %>
 

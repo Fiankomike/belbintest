@@ -33,8 +33,9 @@ class MainController < ApplicationController
   	@messagemsisdn = params[:msisdn]
   	@messagekeyword = params[:keyword]
   	@messagetext = params[:text]
-    #@messagetext = "Hello world"
+    #@messagetext = "A010101 PAL KOD NDC 1 BYA NPP 20 AAA PP 10"
   	@messagetimestamp = params[:'message-timestamp']
+    
 
     if !@messagetext.blank?
     	newsms = GetSms.new
@@ -48,14 +49,26 @@ class MainController < ApplicationController
 
     if !@messagetext.blank?
       @splittxt = @messagetext.split(/\W+/)
-      (2..@splittxt.size-1).each do |i|
 
-        if i%2 == 0 then 
+      #Part 1 of Split
           newresult = Voteresult.new
-          newresult.pollingstationcode = @splittxt[0]
+          newresult.pscode = @splittxt[0]
           newresult.typeofelection = @splittxt[1]
-          newresult.partyorcandidate = @splittxt[i]
-          newresult.votes = @splittxt[i+1]
+          newresult.candidate = @splittxt[2]
+          newresult.party = @splittxt[3]
+          newresult.votes = @splittxt[4]
+          newresult.save
+
+      #Part 2 of Split
+      (5..@splittxt.size-1).each do |i|
+
+        if i%3 == 2 then 
+          newresult = Voteresult.new
+          newresult.pscode = @splittxt[0]
+          newresult.typeofelection = @splittxt[1]
+          newresult.candidate = @splittxt[i]
+          newresult.party = @splittxt[i+1]
+          newresult.votes = @splittxt[i+2]
           newresult.save
         else
           next

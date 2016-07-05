@@ -1,0 +1,29 @@
+<div class="row-fluid">
+	<ul class="nav nav-tabs">
+
+		<% if current_page?("/smsvotes/index") then %>
+	  		<li role="presentation" class="active"><a href="/smsvotes/index">SMS</a></li>
+	  	<%  else %>
+	  		<li role="presentation"><a href="/smsvotes/index">SMS</a></li>
+	  	<% end %>
+
+	  	<% if current_page?("/smsvotes/rawresults") then %>
+			<li role="presentation" class="active"><a href="/smsvotes/rawresults">Raw Results</a></li>
+		<%  else %>
+			<li role="presentation"><a href="/smsvotes/rawresults">Raw Results</a></li>
+		<% end %>
+
+	  	<% if current_page?("/smsvotes/collatedresults") then %>
+	  		<li role="presentation" class="active"><a href="/smsvotes/collatedresults">Collated Results</a></li>
+	  	<%  else %>
+	  		<li role="presentation"><a href="/smsvotes/collatedresults">Collated Results</a></li>
+	  	<% end %>
+
+	  	<% if current_page?("/smsvotes/visualizedresults") then %>
+	  		<li role="presentation" class="active"><a href="/smsvotes/visualizedresults">Visualized Results</a></li>
+	  	<%  else %>
+	  		<li role="presentation"><a href="/smsvotes/visualizedresults">Visualized Results</a></li>
+	  	<% end %>
+
+	</ul>
+</div>

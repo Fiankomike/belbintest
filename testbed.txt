@@ -1,0 +1,28 @@
+PAL
+localhost:3000/main/inbound?msisdn=23312345678&to=4698765432&keyword=C190101&text=C190101+PAL+KOD+NDC+115+BYA+NPP+99+AAA+PPP+48&message-timestamp=2016-07-02+20:19:29
+
+PRE
+localhost:3000/main/inbound?msisdn=23312345678&to=4698765432&keyword=A010101&text=A010102+PRE+JDM+NDC+115+NADA+NPP+99+PKN+PPP+48&message-timestamp=2016-07-02+20:19:29
+
+
+Electoraldatum.joins(:voteresults).where('typeofelection = "PAL"').group(:electoralarea ,:candidate, :party).sum(:votes)
+
+m = Electoraldatum.joins(:voteresults).where('typeofelection = "PAL"').group(:constituency ,:candidate, :party).sum(:votes)
+
+m.sort{|a,b| a[1] <=> b[1]}.last
+
+
+
+set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
+
+
+
+SELECT MAX(sum_votes), region, candidate, party FROM (
+SELECT SUM(votes) AS sum_votes, region AS region, candidate AS candidate, party AS party 
+FROM `electoraldata` INNER JOIN `voteresults` ON `voteresults`.`pscode` = `electoraldata`.`edpscode` 
+WHERE (typeofelection = "PAL") 
+GROUP BY `electoraldata`.`region`, `candidate`, `party`
+) AS Test
+GROUP BY region;
+

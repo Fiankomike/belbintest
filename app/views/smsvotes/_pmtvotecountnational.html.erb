@@ -1,0 +1,31 @@
+<!-- ########  Parliamentary VOTE COUNT ###### -->
+	<!-- Header -->
+	<div class="row">
+			<h1 class="text-center">Parliamentary</h1>
+	</div>
+
+
+		<!-- Parliamentary Table -->
+	
+	<div class="row">
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered table-hover">
+		  			<tr>
+		  				<th>Party</th>
+		  				<th>Total Seats Won </th>
+		  			</tr>
+
+		  	
+		  	<% pmttotal = Electoraldatum.joins(:voteresults).where('typeofelection = "PAL"').group(:candidate, :party).sum(:votes) %>
+		  	<% pmttotal.each do |smsvotes| %>
+
+		  			<tr>
+		  				<td><%=smsvotes[0][1] %></td>
+		  				<td><%=smsvotes[1] %></td>
+		  			</tr>
+
+		  		<% end %>
+		
+				</table>
+			</div>
+	</div>
