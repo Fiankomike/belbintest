@@ -1,0 +1,72 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+
+		<!-- Pie Chart Starts Here -->
+		<div id="containerpie" style="width:100%; height:500px;">
+		</div>
+		<!-- End-->
+
+		<% pretotal = Electoraldatum.joins(:voteresults).where('typeofelection = "PRE"').group(:candidate, :party).sum(:votes) %>
+		<% m = 0.0 %>
+
+		<% pretotal.each do |smsvotes| %>
+		  		<% m += smsvotes[1] %>
+		 <% end %>
+
+	</div>
+
+<script type="text/javascript">
+
+	$(function () {
+
+
+    // Build the chart
+
+    $('#containerpie').highcharts({
+    	credits: {
+            		enabled: false
+        		},
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'National'
+
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Votes',
+            colorByPoint: true,
+            data: [
+            	<% pretotal.each do |smsvotes| %>
+	            {
+	                name: <%= "\"#{smsvotes[0][0]}-#{smsvotes[0][1]}\"".html_safe %>,
+	                y: <%= smsvotes[1].to_f/m.to_f * 100 %>
+	            }, 
+	            <% end %>
+            ]
+        }]
+    });
+});
+	
+</script>
+
+</div>

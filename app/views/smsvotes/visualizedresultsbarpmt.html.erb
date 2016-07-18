@@ -1,0 +1,191 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<%= render('layouts/menu') %>
+
+		 <div class="col-lg-10"><h1 align="center">Parliamentary Results Per Region<h1> </div>
+        <div class="col-lg-2" style="margin-top: 15px"> 
+
+            <!-- Large button group -->
+            <%= render('layouts/graphsmenu') %>
+        </div>
+
+        <% currentdatetime = DateTime.now %>
+
+		<div id="container" style="width:100%; height:500px;">
+		</div>
+
+		<% currentdatetime = DateTime.now %>
+		
+		<!-- Logic starts here -->
+
+		  			<% @pmttotal = [] %>
+		  			<% @regionexists = [] %>
+		  			<% @regionexists2 = [] %>
+				  	<% @constwinnervalue = [] %>
+				  	<% @constwinnerkey = [] %>
+				  	<% @varcount = 0 %>
+				  	<% @varcount2 = 0 %>
+				  	<% @varcount3 = 0 %>
+				  	<% @varcount4 = 0 %>
+				  	<% @varcount5 = 0 %>
+		
+				  	<% z = Electoraldatum.select('distinct constituency') %>
+				  	<% r = Electoraldatum.select('distinct region') %>
+				  	<% y = Voteresult.select('distinct party') %>
+				  	<% @partyname = Hash.new %>
+				  	<% @regionparty = Hash.new %>
+				  	<% @regionpartyvalue = Hash.new %>
+
+				  		<!-- Region-Party Variable -->
+				  		<% r.each do |xregion| %>
+				  			<% y.each do |yparty| %>
+				  				<% tempvar = "#{xregion.region}-#{yparty.party}" %>
+				  				<% @regionparty[tempvar] = 0 %>
+				  			<% end %>
+				  		<% end %>
+				  	<!-- end -->
+
+				  	<% z.each do |zconst| %>
+				  		<% @pmttotal[@varcount] = Electoraldatum.joins(:voteresults).where('typeofelection = "PAL" AND constituency = "' + zconst.constituency + '"').group(:region, :constituency, :candidate, :party).sum(:votes) %>
+				  		<% @constwinnervalue[@varcount] = @pmttotal[@varcount].values.max %>
+				  		<% @constwinnerkey[@varcount] = @pmttotal[@varcount].key(@constwinnervalue[@varcount]) %>
+				  		<% y.each do |yparty| %>
+				  			<%  if @partyname[yparty.party].blank? then @partyname[yparty.party] = 0 end %>
+				  			<% if @constwinnerkey[@varcount].blank? == false then %>
+				  				<% if @constwinnerkey[@varcount].include? yparty.party then @partyname[yparty.party] += 1 end %>
+				  			<% end %>
+				  		<% end %>
+
+				  		<% @varcount += 1 %>	
+				  	<% end %>
+
+		  			<!-- End -->
+
+				  	<!-- Region-Party Count -->
+				  	<% z.each do |zconst| %>
+				  		<% r.each do |xregion| %>
+					  		<% y.each do |yparty| %>
+						  		<% @regionexists[@varcount2] = @pmttotal[@varcount2].key(@constwinnervalue[@varcount2]) %>
+						  		<% if @regionexists[@varcount2].blank? == false then %>
+						  			<% tempvar = "#{xregion.region}-#{yparty.party}" %>
+						  			<% if (@regionexists[@varcount2].include? xregion.region and  @regionexists[@varcount2].include? yparty.party) then %>	
+						  				<% @regionparty[tempvar] += 1 %>
+						  				<% "#{tempvar} #{yparty.party} #{@regionparty[tempvar]}" %></td>
+						  				<% @regionpartyvalue[tempvar] = [] %>
+						  				<% @regionpartyvalue[tempvar].push(@regionparty[tempvar]) %>
+						  			<% end %>
+						  		<% end %>
+						  	<% end %>
+						 <% end %>
+						 <% @varcount2 += 1 %>
+					<% end %>
+					<!-- end -->
+
+					<!-- Data Values -->
+
+						<% getpartyvalue = Hash.new %>
+
+						<% y.each do |yparty| %>
+							<% getpartyvalue[yparty.party] = [] %>
+						<% end %>
+
+				  		<% r.each do |xregion| %>
+					  		<% y.each do |yparty| %>
+						  		<% @regionexists[@varcount5] = @pmttotal[@varcount5].key(@constwinnervalue[@varcount5]) %>
+						  		<% if @regionexists[@varcount5].blank? == false then %>
+						  			<% tempvar = "#{xregion.region}-#{yparty.party}" %>
+						  			<% getpartyvalue[yparty.party].push(@regionparty[tempvar]) %>
+						  		<% end %>
+						  	<% end %>
+						  	<% @varcount5 += 1 %>
+						 <% end %>
+					<!-- end -->
+	</div>
+
+
+	<script type="text/javascript">
+		$(function () { 
+
+
+
+	    // Build the chart
+
+	    	$('#container').highcharts({
+	    		credits: {
+            		enabled: false
+        		},
+	    		chart: {
+            		type: 'column'
+        		},
+        		
+		        title: {
+            		text: <%= "\"As at #{currentdatetime.strftime("%A, %B %d %Y  %I:%M:%S %p")}\"".html_safe %>,
+            		x: -100 //center
+        		},
+
+
+		        xAxis: {
+	            categories: [
+		            			<% r.each do |xregion| %>
+		            				<% @regionexists2[@varcount4] = @pmttotal[@varcount4].key(@constwinnervalue[@varcount4]) %>
+		            				<% if @regionexists2[@varcount4].blank? == false then %>
+		            					<%= "\"#{xregion.region}\",".html_safe %>       					
+		            				<% end %>
+		            				<% @varcount4 += 1 %>
+		            			<% end %>
+		            		]
+		        },
+
+		        yAxis: {
+		            title: {
+		                text: 'Total Votes'
+		            },
+		            plotLines: [{
+		                value: 0,
+		                width: 1,
+		                color: '#808080'
+		            }]
+		        },
+
+		        tooltip: {
+		            valueSuffix: ' votes'
+		        },
+
+		        legend: {
+		            layout: 'horizontal',
+		            align: 'center',
+		            horizontalAlign: 'middle',
+		            borderWidth: 0
+		        },
+
+		        series: [
+
+		        	<% p= "" %>
+		        	<% checkparty = [] %>
+
+				  	<% r.each do |xregion| %>
+					  	<% y.each do |yparty| %>
+						  	<% @regionexists[@varcount3] = @pmttotal[@varcount3].key(@constwinnervalue[@varcount3]) %>
+						  	<% if @regionexists[@varcount3].blank? == false then %>
+						  		<% tempvar = "#{xregion.region}-#{yparty.party}" %> 	
+		        		        	
+		            	 <% if !checkparty.include? yparty.party then %>
+		            			<% checkparty.push(yparty.party) %>
+		            			{
+		            			<%= "name: \"#{yparty.party}\"".html_safe %>,
+		            			<%= "data: #{getpartyvalue[yparty.party]}" %>
+		            			},
+		            		<% end %>            
+		        	
+		        			<% end %>
+						 <% end %>
+						<% @varcount3 += 1 %>
+					<% end %>
+
+					<% puts checkparty.size %>
+		        ]
+	    	});
+		});
+	</script>
+
+</div>

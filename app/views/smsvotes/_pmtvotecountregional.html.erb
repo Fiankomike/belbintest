@@ -16,20 +16,100 @@
 		  				<th>Total Seats Won </th>
 		  			</tr>
 
-		  	
-		  	<% pmttotal = Electoraldatum.joins(:voteresults).where('typeofelection = "PAL"').group(:region, :candidate, :party).sum(:votes) %>
-		  	<% m = "" %>
-		  	<% pmttotal.each do |smsvotes| %>
+		  			<!-- Logic starts here -->
 
-		  			<tr>
-		  				<td><strong><%= if m != smsvotes[0][0] then smsvotes[0][0] end %></strong></td>
-		  				<% m = smsvotes[0][0] %>
-		  				<td><%=smsvotes[0][2]%></td>
-		  				<td><%=smsvotes[1] %></td>
-		  			</tr>
-
-		  		<% end %>
+		  			<% @pmttotal = [] %>
+		  			<% @regionexists = [] %>
+				  	<% @constwinnervalue = [] %>
+				  	<% @constwinnerkey = [] %>
+				  	<% @varcount = 0 %>
+				  	<% @varcount2 = 0 %>
+				  	<% @varcount3 = 0 %>
 		
+				  	<% z = Electoraldatum.select('distinct constituency') %>
+				  	<% r = Electoraldatum.select('distinct region') %>
+				  	<% y = Voteresult.select('distinct party') %>
+				  	<% @partyname = Hash.new %>
+				  	<% @regionparty = Hash.new %>
+
+				  		<!-- Region-Party Variable -->
+				  		<% r.each do |xregion| %>
+				  			<% y.each do |yparty| %>
+				  				<% tempvar = "#{xregion.region}-#{yparty.party}" %>
+				  				<% @regionparty[tempvar] = 0 %>
+				  			<% end %>
+				  		<% end %>
+				  	<!-- end -->
+
+				  	<% z.each do |zconst| %>
+				  		<% @pmttotal[@varcount] = Electoraldatum.joins(:voteresults).where('typeofelection = "PAL" AND constituency = "' + zconst.constituency + '"').group(:region, :constituency, :candidate, :party).sum(:votes) %>
+				  		<% @constwinnervalue[@varcount] = @pmttotal[@varcount].values.max %>
+				  		<% @constwinnerkey[@varcount] = @pmttotal[@varcount].key(@constwinnervalue[@varcount]) %>
+				  		<% y.each do |yparty| %>
+				  			<%  if @partyname[yparty.party].blank? then @partyname[yparty.party] = 0 end %>
+				  			<% if @constwinnerkey[@varcount].blank? == false then %>
+				  				<% if @constwinnerkey[@varcount].include? yparty.party then @partyname[yparty.party] += 1 end %>
+				  			<% end %>
+				  		<% end %>
+
+				  		<% @varcount += 1 %>	
+				  	<% end %>
+
+		  			<!-- End -->
+
+				  	<!-- Region-Party Count -->
+				  	<% z.each do |zconst| %>
+				  		<% r.each do |xregion| %>
+					  		<% y.each do |yparty| %>
+						  		<% @regionexists[@varcount2] = @pmttotal[@varcount2].key(@constwinnervalue[@varcount2]) %>
+						  		<% if @regionexists[@varcount2].blank? == false then %>
+						  			<% tempvar = "#{xregion.region}-#{yparty.party}" %>
+						  			<% if (@regionexists[@varcount2].include? xregion.region and  @regionexists[@varcount2].include? yparty.party) then %>	
+						  				<% @regionparty[tempvar] += 1 %>
+						  				<% "#{tempvar} #{yparty.party} #{@regionparty[tempvar]}" %></td>
+						  			<% end %>
+						  		<% end %>
+						  	<% end %>
+						 <% end %>
+						 <% @varcount2 += 1 %>
+					<% end %>
+					<!-- end -->
+
+					<!-- Region-Party Results -->
+
+						<% p= "" %>
+
+				  		<% r.each do |xregion| %>
+					  		<% y.each do |yparty| %>
+						  		<% @regionexists[@varcount3] = @pmttotal[@varcount3].key(@constwinnervalue[@varcount3]) %>
+						  		<% if @regionexists[@varcount3].blank? == false then %>
+						  			<% tempvar = "#{xregion.region}-#{yparty.party}" %>
+						  				<tr>
+						  					<td><strong><%= if p != xregion.region then xregion.region end %></strong> </td>
+						  					<% p = xregion.region %>
+						  					<td><%= "#{yparty.party}" %></td>
+						  					<td><%= @regionparty[tempvar] %></td>
+						  				</tr>	
+						  		<% end %>
+						  	<% end %>
+						  	<% @varcount3 += 1 %>
+						 <% end %>
+					<!-- end -->
+
+				  		
+
+
+		  			<% m = 0.0 %>
+				  	<% @partyname.each do |smsvotes| %>
+				  		<% m += smsvotes[1] %>
+				  	<% end %>
+
+				  	
+						<td></td>
+						<td></td>
+						<td><strong><%= m.to_i %></strong></td>
+
+
 				</table>
 			</div>
 	</div>

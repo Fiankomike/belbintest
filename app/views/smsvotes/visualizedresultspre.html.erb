@@ -1,0 +1,146 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<%= render('layouts/menu') %>
+
+        <div class="col-lg-10"><h1 align="center">Presidential Results - Summary<h1> </div>
+        <div class="col-lg-2" style="margin-top: 15px"> 
+
+            <!-- Large button group -->
+            <%= render('layouts/graphsmenu') %>
+        </div>
+
+        <% currentdatetime = DateTime.now %>
+        <% r = Electoraldatum.joins(:voteresults).where('typeofelection = "PRE"').group(:region, :candidate, :party).sum(:votes) %>
+        <% @regions = [] %>
+        <% @candidate = [] %>
+        <% @candidateresult = [] %>
+
+        <% r.each do |t| %>
+            <% if @regions.include? t[0][0] then next else @regions.push("#{t[0][0]}") end %>
+        <% end %>
+
+
+        <!-- Pie Chart Starts Here -->
+        <div id="container" style="width:100%; height:500px;">
+        </div>
+        <!-- End-->
+
+        <% pretotal = Electoraldatum.joins(:voteresults).where('typeofelection = "PRE"').group(:candidate, :party).sum(:votes) %>
+        <% m = 0.0 %>
+
+        <% pretotal.each do |smsvotes| %>
+                <% m += smsvotes[1] %>
+         <% end %>
+
+
+		<div id="container" style="width:100%; height:500px;">
+		</div>
+	</div>
+
+
+	<script type="text/javascript">
+
+		$(function () {
+
+        // Build the chart
+
+    $('#container').highcharts({
+        credits: {
+            enabled: false
+        },
+        title: {
+            text: <%= "\"As at #{currentdatetime.strftime("%A, %B %d %Y  %I:%M:%S %p")}\"".html_safe %>
+        },
+        xAxis: {
+            categories: <%= "#{@regions}".html_safe %>
+        },
+        yAxis: {
+                    title: {
+                    text: 'Total Votes'
+                }
+        },
+        labels: {
+            items: [{
+                html: 'Overall Percentage of Votes',
+                style: {
+                    left: '200px',
+                    top: '18px',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+                }
+            }]
+        },
+        series: [
+                    <% n = 0 %>
+                    <% r.each do |t| %>
+                        <% if @candidate.include? "#{t[0][1]}-#{t[0][2]}" then %> 
+                            <% @candidateresult.push(t[1]) %>
+                            <% next %>
+                        <% else %>
+                            <% @candidate.push("#{t[0][1]}-#{t[0][2]}") %> 
+                            <% if @candidateresult.blank? then @candidateresult[n] = t[1] else @candidateresult.push(t[1]) end %>
+                        <% end %>
+                    <% end %>
+
+                    //Begin
+                    <% tz = @candidateresult.size / @candidate.size%>
+                        <% tl = tz - @candidate.size %>
+                        <% tv = tz %>
+                        <% ty = 0 %>
+                        <% tk = tz - tl %>
+                        <% tw = 0 %>
+                        <% tu = 0 %>
+                        <% tx = [] %>
+
+                        <% while tw < tz do %>
+                            <% while ty < tz - tl do %>
+                                <% if tx[ty].blank? then %>
+                                    <% tx[ty] = [@candidateresult[ty]] %>
+                                    <% "ty1 = #{ty}" %>
+                                    <% "tk1 = #{tk}" %>
+                                <% else %>
+                                    <% tx[ty].push(@candidateresult[tk]) %>
+                                    <% "ty2 = #{ty}" %>
+                                    <% "tk2 = #{tk}" %>
+                                    <% tk += 1 %>
+                                <% end %>
+        
+                                <% ty += 1 %>
+                                
+                            <% end %>
+                                <% tw += 1 %>
+                                <% ty = 0 %>
+                        <% end %>
+                    //End
+
+                    <% x = 0 %>
+                    <% @candidate.each do |t| %>        
+                    {   
+                        type: 'column',            
+                        name: <%= "\"#{@candidate[x]}\"".html_safe %>,
+                        data: <%= "#{tx[x]}".html_safe %>               
+                    },
+                        <% x += 1 %>
+                    <% end %> 
+        {
+            type: 'pie',
+            name: 'Percentage of Votes',
+            data: [
+                <% pretotal.each do |smsvotes| %>
+                {
+                    name: <%= "\"#{smsvotes[0][0]}-#{smsvotes[0][1]}\"".html_safe %>,
+                    y: <%= (smsvotes[1].to_f/m.to_f * 100).round(1) %>
+                }, 
+                <% end %>
+            ],
+            center: [250, 80],
+            size: 100,
+            showInLegend: false,
+            dataLabels: {
+                enabled: false
+            }
+        }]
+    });
+});
+		
+	</script>
+</div>

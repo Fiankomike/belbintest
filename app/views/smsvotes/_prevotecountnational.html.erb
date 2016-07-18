@@ -19,18 +19,26 @@
 		  			</tr>
 
 		  	<% pretotal = Electoraldatum.joins(:voteresults).where('typeofelection = "PRE"').group(:candidate, :party).sum(:votes) %>
-		  	<% m = "" %>
+		  	<% m = 0.0 %>
+
+		  	<% pretotal.each do |smsvotes| %>
+		  		<% m += smsvotes[1] %>
+		  	<% end %>
+
 		  	<% pretotal.each do |smsvotes| %>
 
 		  			<tr>
 		  				<td><%= smsvotes[0][0] %></td>
 		  				<td><%=smsvotes[0][1] %></td>
 		  				<td><%=smsvotes[1] %></td>
-		  				<td><%=smsvotes[1] %> %</td>
+		  				<td><%= (smsvotes[1].to_f/m.to_f * 100).round(1) %> %</td>
 		  			</tr>
 
 		  		<% end %>
-		
+					<td></td>
+					<td></td>
+					<td><strong><%= m.to_i %></strong></td>
+					<td><strong><%= "100 %" %></strong></td>
 				</table>
 			</div>
 		</div>

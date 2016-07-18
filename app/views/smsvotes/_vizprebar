@@ -1,0 +1,122 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+
+		<div id="container" style="width:100%; height:500px;">
+		</div>
+
+		<% currentdatetime = DateTime.now %>
+		<% r = Electoraldatum.joins(:voteresults).where('typeofelection = "PRE"').group(:region, :candidate, :party).sum(:votes) %>
+		<% @regions = [] %>
+		<% @candidate = [] %>
+		<% @candidateresult = [] %>
+
+		<% r.each do |t| %>
+			<% if @regions.include? t[0][0] then next else @regions.push("#{t[0][0]}") end %>
+		<% end %>
+	</div>
+
+
+	<script type="text/javascript">
+		$(function () { 
+
+	    // Build the chart
+
+	    	$('#container').highcharts({
+	    		credits: {
+            		enabled: false
+        		},
+	    		chart: {
+            		type: 'column'
+        		},
+        		
+		        title: {
+            		text: 'Per Region',
+            		x: -100 //center
+        		},
+
+
+		        xAxis: {
+	            categories: <%= "#{@regions}".html_safe %>
+		        },
+
+		        yAxis: {
+		            title: {
+		                text: 'Total Votes'
+		            },
+		            plotLines: [{
+		                value: 0,
+		                width: 1,
+		                color: '#808080'
+		            }]
+		        },
+
+		        tooltip: {
+		            valueSuffix: ' votes'
+		        },
+
+		        legend: {
+		            layout: 'horizontal',
+		            align: 'center',
+		            horizontalAlign: 'middle',
+		            borderWidth: 0
+		        },
+
+		        series: [
+		        	<% n = 0 %>
+		        	<% r.each do |t| %>
+		        		<% if @candidate.include? "#{t[0][1]}-#{t[0][2]}" then %> 
+		        			<% @candidateresult.push(t[1]) %>
+		        			<% next %>
+		        		<% else %>
+		        			<% @candidate.push("#{t[0][1]}-#{t[0][2]}") %> 
+		        			<% if @candidateresult.blank? then @candidateresult[n] = t[1] else @candidateresult.push(t[1]) end %>
+		        		<% end %>
+		        	<% end %>
+
+		        	//Begin
+		        	<% tz = @candidateresult.size / @candidate.size%>
+		        		<% tl = tz - @candidate.size %>
+			        	<% tv = tz %>
+			        	<% ty = 0 %>
+			        	<% tk = tz - tl %>
+			        	<% tw = 0 %>
+			        	<% tu = 0 %>
+			        	<% tx = [] %>
+
+			        	<% while tw < tz do %>
+				        	<% while ty < tz - tl do %>
+				        		<% if tx[ty].blank? then %>
+				        			<% tx[ty] = [@candidateresult[ty]] %>
+				        			<% "ty1 = #{ty}" %>
+				        			<% "tk1 = #{tk}" %>
+				        		<% else %>
+				        			<% tx[ty].push(@candidateresult[tk]) %>
+				        			<% "ty2 = #{ty}" %>
+				        			<% "tk2 = #{tk}" %>
+				        			<% tk += 1 %>
+				        		<% end %>
+		
+				        		<% ty += 1 %>
+				        		
+				        	<% end %>
+				        		<% tw += 1 %>
+				        		<% ty = 0 %>
+				        <% end %>
+		        	//End
+
+		        	<% x = 0 %>
+		        	<% @candidate.each do |t| %> 		
+		        	{	        	
+		            	name: <%= "\"#{@candidate[x]}\"".html_safe %>,
+		            	data: <%= "#{tx[x]}".html_safe %>	            
+		        	},
+		        		<% x += 1 %>
+		        	<% end %>
+		        ]
+		        <% @candidateresult %>
+		        <% tz %>
+		        <% @candidate.size %>
+	    	});
+		});
+	</script>
+</div>

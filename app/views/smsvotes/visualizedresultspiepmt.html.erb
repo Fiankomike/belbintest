@@ -1,0 +1,132 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<%= render('layouts/menu') %>
+
+		<div class="col-lg-10"><h1 align="center">Parliamentary Results - National<h1> </div>
+		<div class="col-lg-2" style="margin-top: 15px"> 
+
+			<!-- Large button group -->
+			<%= render('layouts/graphsmenu') %>
+		</div>
+
+		<% currentdatetime = DateTime.now %>
+
+		<!-- Pie Chart Starts Here -->
+        <div id="container" class="col-lg-10" style="height:500px;">
+        </div>
+        <!-- End-->
+
+		  <% @pmttotal = [] %>
+            <% @constwinnervalue = [] %>
+            <% @constwinnerkey = [] %>
+            <% @varcount = 0 %>
+
+            <% z = Electoraldatum.select('distinct constituency') %>
+            <% y = Voteresult.select('distinct party') %>
+            <% @partyname = Hash.new %>
+
+
+            <% z.each do |zconst| %>
+                <% @pmttotal[@varcount] = Electoraldatum.joins(:voteresults).where('typeofelection = "PAL" AND constituency = "' + zconst.constituency + '"').group(:Constituency, :candidate, :party).sum(:votes) %>
+                <% @constwinnervalue[@varcount] = @pmttotal[@varcount].values.max %>
+                <% @constwinnerkey[@varcount] = @pmttotal[@varcount].key(@constwinnervalue[@varcount]) %>
+                <% y.each do |yparty| %>
+                    <%  if @partyname[yparty.party].blank? then @partyname[yparty.party] = 0 end %>
+                    <% if @constwinnerkey[@varcount].blank? == false then %>
+                        <% if @constwinnerkey[@varcount].include? yparty.party then @partyname[yparty.party] += 1 end %>
+                    <% end %>
+                <% end %>
+                <% @varcount += 1 %>
+                <% puts @partyname %>
+            <% end %>
+
+            <% m = 0.0 %>
+            <% @partyname.each do |smsvotes| %>
+                <% m += smsvotes[1] %>
+            <% end %>
+
+            <!-- Pie Chart Starts Here -->
+                <div id="container" class="col-lg-2" style="padding-top: 100px;">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                            <tr>
+                                <th>Party</th>
+                                <th>Total Seats Won </th>
+                            </tr>
+                            <% q = 0.0 %>
+                            <% @partyname.each do |smsvotes| %>
+                                <% q += smsvotes[1] %>
+                            <% end %>
+
+                            <% @partyname.each do |smsvotes| %>
+
+                                <tr>
+                                    <td><%=smsvotes[0]%></td>
+                                    <td><%=smsvotes[1] %></td>
+                                </tr>
+
+                            <% end %>
+                                <td></td>
+                                <td><strong><%= q.to_i %></strong></td>
+                        </table>
+                    </div>
+                </div>
+        <!-- End-->
+
+	</div>
+
+<script type="text/javascript">
+
+	$(function () {
+
+
+    // Build the chart
+
+    $('#container').highcharts({
+    	credits: {
+            		enabled: false
+        		},
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: <%= "\"As at #{currentdatetime.strftime("%A, %B %d %Y  %I:%M:%S %p")}\"".html_safe %>
+
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Votes',
+            colorByPoint: true,
+            data: [
+            	<% @partyname.each do |smsvotes| %>
+	            {
+	                name: <%= "\"#{smsvotes[0]}\"".html_safe %>,
+	                y: <%= smsvotes[1].to_f/m.to_f * 100 %>
+	            }, 
+	            <% end %>
+            ]
+        }]
+    });
+});
+	
+</script>
+
+</div>

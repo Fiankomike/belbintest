@@ -16,16 +16,45 @@
 		  			</tr>
 
 		  	
-		  	<% pmttotal = Electoraldatum.joins(:voteresults).where('typeofelection = "PAL"').group(:candidate, :party).sum(:votes) %>
-		  	<% pmttotal.each do |smsvotes| %>
+		  	<% @pmttotal = [] %>
+		  	<% @constwinnervalue = [] %>
+		  	<% @constwinnerkey = [] %>
+		  	<% @varcount = 0 %>
 
-		  			<tr>
-		  				<td><%=smsvotes[0][1] %></td>
-		  				<td><%=smsvotes[1] %></td>
-		  			</tr>
+		  	<% z = Electoraldatum.select('distinct constituency') %>
+		  	<% y = Voteresult.select('distinct party') %>
+		  	<% @partyname = Hash.new %>
 
+
+		  	<% z.each do |zconst| %>
+		  		<% @pmttotal[@varcount] = Electoraldatum.joins(:voteresults).where('typeofelection = "PAL" AND constituency = "' + zconst.constituency + '"').group(:Constituency, :candidate, :party).sum(:votes) %>
+		  		<% @constwinnervalue[@varcount] = @pmttotal[@varcount].values.max %>
+		  		<% @constwinnerkey[@varcount] = @pmttotal[@varcount].key(@constwinnervalue[@varcount]) %>
+		  		<% y.each do |yparty| %>
+		  			<%  if @partyname[yparty.party].blank? then @partyname[yparty.party] = 0 end %>
+		  			<% if @constwinnerkey[@varcount].blank? == false then %>
+		  				<% if @constwinnerkey[@varcount].include? yparty.party then @partyname[yparty.party] += 1 end %>
+		  			<% end %>
 		  		<% end %>
-		
+		  		<% @varcount += 1 %>
+		  		<% puts @partyname %>
+		  	<% end %>
+
+		  	<% m = 0.0 %>
+		  	<% @partyname.each do |smsvotes| %>
+		  		<% m += smsvotes[1] %>
+		  	<% end %>
+
+		  	<% @partyname.each do |smsvotes| %>
+
+		  		<tr>
+		  			<td><%=smsvotes[0]%></td>
+		  			<td><%=smsvotes[1] %></td>
+		  		</tr>
+
+		  	<% end %>
+				<td></td>
+				<td><strong><%= m.to_i %></strong></td>
 				</table>
 			</div>
 	</div>

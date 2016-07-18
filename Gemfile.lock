@@ -79,6 +79,8 @@ GEM
     execjs (2.7.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    highcharts-rails (4.2.5)
+      railties (>= 3.1)
     i18n (0.7.0)
     jbuilder (2.4.1)
       activesupport (>= 3.0.0, < 5.1)
@@ -190,6 +192,7 @@ DEPENDENCIES
   capistrano-rbenv (~> 2.0, >= 2.0.4)
   coffee-rails (~> 4.1.0)
   d3_rails (~> 3.5, >= 3.5.16)
+  highcharts-rails
   jbuilder (~> 2.0)
   jquery-rails
   mysql2 (>= 0.3.13, < 0.5)

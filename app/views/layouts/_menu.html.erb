@@ -19,10 +19,10 @@
 	  		<li role="presentation"><a href="/smsvotes/collatedresults">Collated Results</a></li>
 	  	<% end %>
 
-	  	<% if current_page?("/smsvotes/visualizedresults") then %>
-	  		<li role="presentation" class="active"><a href="/smsvotes/visualizedresults">Visualized Results</a></li>
+	  	<% if current_page?("/smsvotes/vizpre") or current_page?("/smsvotes/vizpmt") then %>
+	  		<li role="presentation" class="active"><a href="/smsvotes/vizpre">Visualized Results</a></li>
 	  	<%  else %>
-	  		<li role="presentation"><a href="/smsvotes/visualizedresults">Visualized Results</a></li>
+	  		<li role="presentation"><a href="/smsvotes/vizpre">Visualized Results</a></li>
 	  	<% end %>
 
 	</ul>

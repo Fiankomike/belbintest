@@ -2,7 +2,7 @@ PAL
 localhost:3000/main/inbound?msisdn=23312345678&to=4698765432&keyword=C190101&text=C190101+PAL+KOD+NDC+115+BYA+NPP+99+AAA+PPP+48&message-timestamp=2016-07-02+20:19:29
 
 PRE
-localhost:3000/main/inbound?msisdn=23312345678&to=4698765432&keyword=A010101&text=A010102+PRE+JDM+NDC+115+NADA+NPP+99+PKN+PPP+48&message-timestamp=2016-07-02+20:19:29
+localhost:3000/main/inbound?msisdn=23312345678&to=4698765432&keyword=K010101&text=K010101+PRE+JDM+NDC+210+NADA+NPP+450+PKN+PPP+198&message-timestamp=2016-07-09+20:19:29
 
 
 Electoraldatum.joins(:voteresults).where('typeofelection = "PAL"').group(:electoralarea ,:candidate, :party).sum(:votes)
@@ -26,3 +26,6 @@ GROUP BY `electoraldata`.`region`, `candidate`, `party`
 ) AS Test
 GROUP BY region;
 
+
+
+ 

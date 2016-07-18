@@ -2,14 +2,13 @@
 	<div class="row-fluid">
 		<%= render('layouts/menu') %>
 
-		<% receivedps = Voteresult.select('distinct pscode').count %>
+		<% receivedps = Voteresult.select('distinct pscode').where('typeofelection = "PAL"').count %>
 		<% totalps = Electoraldatum.select('distinct edpscode').count %>
-
 
 	<!-- ########  ACTUAL VOTE COUNT ###### -->
 		<!-- Header -->
 		<div class="row">
-			<div class="col-lg-10"><h1 align="center">Results Per Polling Station <span class="badge"><%= "#{receivedps} out of #{totalps} polling stations" %></span><h1></div>
+			<div class="col-lg-10"><h1 align="center">Parliamentary Results Per Polling Station <span class="badge"><%= "#{receivedps} out of #{totalps} polling stations" %></span></h1> </div>
 			<div class="col-lg-2" style="margin-top: 15px"> 
 
 			<!-- Large button group -->
@@ -33,7 +32,7 @@
 		  				<th>Vote Count</th>
 		  			</tr>
 
-		  	<% allsmsvotes = Electoraldatum.joins(:voteresults).select('*').order('pscode, typeofelection') %>
+		  	<% allsmsvotes = Electoraldatum.joins(:voteresults).where('typeofelection = "PAL"').select('*').order('pscode, typeofelection') %>
 		  	<% idcounter = 0 %>
 		  	<% m = "" %>
 		  	<% allsmsvotes.each do |smsvotes| %>
