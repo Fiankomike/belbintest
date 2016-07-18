@@ -74,7 +74,7 @@
 		        	<% end %>
 
 		        	//Begin
-		        	<% tz = @candidateresult.size / @candidate.size%>
+		        	<% tz = if @candidate.size != 0 then @candidateresult.size / @candidate.size end %>
 		        		<% tl = tz - @candidate.size %>
 			        	<% tv = tz %>
 			        	<% ty = 0 %>
