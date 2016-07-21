@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'smsvotes/index'
 
-  root 'smsvotes#index'
+  root 'smsvotes#vizpre'
 
   match ':controller(/:action(/:id))', :via => [:get, :post]
 
