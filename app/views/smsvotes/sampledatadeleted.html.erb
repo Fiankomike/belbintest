@@ -1,0 +1,16 @@
+<% @PageTitle = "Generated Sample Data" %>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<%= render('layouts/menu') %>
+	</div>
+
+	<div class="row-fluid">
+		<h1 align="center">Sample Data Deleted<h1> 
+
+		<h4 align="center"><%= Electoraldatum.select('distinct edpscode').count %> Distinct Polling Stations Added<h4>
+		<h3 align="center"><%= Electoraldatum.select('distinct electoralarea').count %> Distinct Electoral Areas Created<h3>
+		<h3 align="center"><%= Electoraldatum.select('distinct constituency').count %> Distinct Constituencies Created<h3>
+		<h3 align="center"><%= Electoraldatum.select('distinct region').count %> Distinct Regions Created<h3>
+	</div>
+</div>

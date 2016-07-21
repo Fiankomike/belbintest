@@ -1,8 +1,8 @@
 PAL
-localhost:3000/main/inbound?msisdn=23312345678&to=4698765432&keyword=C190101&text=C190101+PAL+KOD+NDC+115+BYA+NPP+99+AAA+PPP+48&message-timestamp=2016-07-02+20:19:29
+localhost:3000/main/inbound?msisdn=23312345678&to=4698765432&keyword=C190303&text=C190303+PAL+MMM+NDC+75+NNN+NPP+195+ZZZ+PPP+88&message-timestamp=2016-07-02+20:19:29
 
 PRE
-localhost:3000/main/inbound?msisdn=23312345678&to=4698765432&keyword=K010101&text=K010101+PRE+JDM+NDC+210+NADA+NPP+450+PKN+PPP+198&message-timestamp=2016-07-09+20:19:29
+localhost:3000/main/inbound?msisdn=2338765432&to=9087765&keyword=K010101&text=K010101+PRE+JDM+NDC+210+NADA+NPP+450+PKN+PPP+198&message-timestamp=2016-07-09+20:19:29
 
 
 Electoraldatum.joins(:voteresults).where('typeofelection = "PAL"').group(:electoralarea ,:candidate, :party).sum(:votes)
@@ -17,14 +17,38 @@ set global sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_
 set session sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION';
 
 
+Electoraldatum.joins(:voteresults).where('typeofelection = "PAL"').group(:region, :candidate, :party).sum(:votes)
 
-SELECT MAX(sum_votes), region, candidate, party FROM (
-SELECT SUM(votes) AS sum_votes, region AS region, candidate AS candidate, party AS party 
-FROM `electoraldata` INNER JOIN `voteresults` ON `voteresults`.`pscode` = `electoraldata`.`edpscode` 
-WHERE (typeofelection = "PAL") 
-GROUP BY `electoraldata`.`region`, `candidate`, `party`
-) AS Test
-GROUP BY region;
+Electoraldatum.select('distinct edpscode').count
+
+Voteresult.select('distinct pscode').count
+
+Voteresult.select('distinct pscode').where('typeofelection = "PAL"').count
+
+Voteresult.select('distinct pscode').where('typeofelection = "PRE"').count
+
+color: Highcharts.getOptions().colors[0]
+
+
+//Presidential
+
+for x in 1..120	
+open("http://localhost:3000/main/inbound?msisdn=2338765432&to=9087765&keyword=GAR#{x}&text=GAR#{x}+PRE+JDM+NDC+#{rand(1000)}+NADA+NPP+#{rand(1500)}+PKN+PPP+#{rand(700)}+EM+PNC+#{rand(500)}+IGS+CPP+#{rand(400)}&message-timestamp=2016-07-09+20:19:29")
+end
+
+
+//Parliamentary
+
+for x in 1..8
+open("http://localhost:3000/main/inbound?msisdn=2338765432&to=9087765&keyword=NR#{x}&text=NR#{x}+PAL+AAA+NDC+#{rand(1000)}+BBB+NPP+#{rand(1000)}+CCC+PPP+#{rand(1000)}+DDD+IND+#{rand(1000)}+EEE+CPP+#{rand(1000)}&message-timestamp=2016-07-09+20:19:29")
+end
+
+
+
+
+
+
+
 
 
 

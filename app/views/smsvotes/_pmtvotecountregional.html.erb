@@ -28,7 +28,7 @@
 		
 				  	<% z = Electoraldatum.select('distinct constituency') %>
 				  	<% r = Electoraldatum.select('distinct region') %>
-				  	<% y = Voteresult.select('distinct party') %>
+				  	<% y = Voteresult.select('distinct party').where('typeofelection = "PAL"') %>
 				  	<% @partyname = Hash.new %>
 				  	<% @regionparty = Hash.new %>
 
@@ -66,7 +66,7 @@
 						  			<% tempvar = "#{xregion.region}-#{yparty.party}" %>
 						  			<% if (@regionexists[@varcount2].include? xregion.region and  @regionexists[@varcount2].include? yparty.party) then %>	
 						  				<% @regionparty[tempvar] += 1 %>
-						  				<% "#{tempvar} #{yparty.party} #{@regionparty[tempvar]}" %></td>
+						  				<% "#{tempvar} #{yparty.party} #{@regionparty[tempvar]}" %>
 						  			<% end %>
 						  		<% end %>
 						  	<% end %>

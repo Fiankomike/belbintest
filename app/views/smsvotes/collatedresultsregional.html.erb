@@ -1,9 +1,14 @@
+<% @PageTitle = "Regional Results" %>
+
 <div class="container-fluid">
 	<% @PageTitle = "Regional Results" %>
 	<div class="row-fluid">
 		<%= render('layouts/menu') %>
 
-		<div class="col-lg-10"><h1 align="center">Results per Region<h1> </div>
+		<% receivedps = Electoraldatum.joins(:voteresults).select('distinct pscode').count %>
+		<% totalps = Electoraldatum.select('distinct edpscode').count %>
+
+		<div class="col-lg-10"><h1 align="center">Results per Region <span class="badge"><%= "#{receivedps} out of #{totalps} polling stations" %></span><h1> </div>
 		<div class="col-lg-2" style="margin-top: 15px"> 
 
 			<!-- Large button group -->

@@ -1,8 +1,10 @@
+<% @PageTitle = "Polling Station Results (Parliamentary)" %>
+
 <div class="container-fluid">
 	<div class="row-fluid">
 		<%= render('layouts/menu') %>
 
-		<% receivedps = Voteresult.select('distinct pscode').where('typeofelection = "PAL"').count %>
+		<% receivedps = Electoraldatum.joins(:voteresults).select('distinct pscode').where('typeofelection = "PAL"').count %>
 		<% totalps = Electoraldatum.select('distinct edpscode').count %>
 
 	<!-- ########  ACTUAL VOTE COUNT ###### -->

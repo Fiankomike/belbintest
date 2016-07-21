@@ -1,0 +1,18 @@
+<div class="btn-group">
+	  			<button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	    			Filter by Region <span class="caret"></span>
+	  			</button>
+	  			<ul class="dropdown-menu">
+	  				<li><a href="/smsvotes/lpsgar">Greater Accra</a></li>
+	  				<li><a href="/smsvotes/lpsar">Ashanti</a></li>
+	  				<li><a href="/smsvotes/lpsvr">Volta</a></li>
+	  				<li><a href="/smsvotes/lpser">Eastern</a></li>
+	  				<li><a href="/smsvotes/lpscr">Central</a></li>
+	  				<li><a href="/smsvotes/lpswr">Western</a></li>
+	  				<li><a href="/smsvotes/lpsbar">Brong-Ahafo</a></li>
+	  				<li><a href="/smsvotes/lpsnr">Northen</a></li>
+	  				<li><a href="/smsvotes/lpsuer">Upper East</a></li>
+	  				<li><a href="/smsvotes/lpsuwr">Upper West</a></li>
+	  				<li><a href="/smsvotes/listofpollingstations">Show All</a></li>
+	  			</ul>
+</div>

@@ -11,7 +11,7 @@
             <% @varcount = 0 %>
 
             <% z = Electoraldatum.select('distinct constituency') %>
-            <% y = Voteresult.select('distinct party') %>
+            <% y = Voteresult.select('distinct party').where('typeofelection = "PAL"') %>
             <% @partyname = Hash.new %>
 
 

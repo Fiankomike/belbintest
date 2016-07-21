@@ -1,8 +1,10 @@
+<% @PageTitle = "Polling Station Results" %>
+
 <div class="container-fluid">
 	<div class="row-fluid">
 		<%= render('layouts/menu') %>
 
-		<% receivedps = Voteresult.select('distinct pscode').count %>
+		<% receivedps = Electoraldatum.joins(:voteresults).select('distinct pscode').count %>
 		<% totalps = Electoraldatum.select('distinct edpscode').count %>
 
 

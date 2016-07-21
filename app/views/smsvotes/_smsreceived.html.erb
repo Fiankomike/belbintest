@@ -1,7 +1,12 @@
+<% @PageTitle = "SMS Received" %>
+
 <!-- Header -->
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="text-center">SMS Received</h1>
+			<% receivedps = Electoraldatum.joins(:voteresults).select('distinct pscode').count %>
+			<% totalps = Electoraldatum.select('distinct edpscode').count %>
+
+			<h1 class="text-center">SMS Received <span class="badge"><%= "#{receivedps} out of #{totalps} polling stations" %></h1>
 		</div>
 	</div>
 

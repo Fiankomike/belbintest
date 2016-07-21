@@ -1,14 +1,16 @@
+<% @PageTitle = "Overview of Parliamentary Results" %>
+
 <div class="container-fluid">
 	<div class="row-fluid">
 		<%= render('layouts/menu') %>
 	</div>
 
-	<% receivedps = Voteresult.select('distinct pscode').count %>
+	<% receivedps = Electoraldatum.joins(:voteresults).select('distinct pscode').where('typeofelection = "PAL"').count %>
 	<% totalps = Electoraldatum.select('distinct edpscode').count %>
 
 	<div class="row-fluid">
 		<div class="col-lg-10">
-			<h1 align="center">Presidential Results <span class="badge"><%= "#{receivedps} out of #{totalps} polling stations" %></span><h1> 
+			<h1 align="center">Parliamentary Results <span class="badge"><%= "#{receivedps} out of #{totalps} polling stations" %></span><h1> 
 		</div>
 
         <div class="col-lg-2" style="margin-top: 15px"> 
@@ -19,12 +21,12 @@
 
 
 	<div class="row-fluid">
-		<div class="col-lg-8">
-			<%= render('smsvotes/vizprebar') %>
+		<div class="col-lg-7">
+			<%= render('smsvotes/vizpmtbar') %>
 		</div>
 
-		<div class="col-lg-4">
-			<%= render('smsvotes/vizprepie') %>
+		<div class="col-lg-5">
+			<%= render('smsvotes/vizpmtpie') %>
 		</div>
     </div>
 </div>

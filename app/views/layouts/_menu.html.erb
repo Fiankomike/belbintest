@@ -8,9 +8,9 @@
 	  	<% end %>
 
 	  	<% if current_page?("/smsvotes/rawresults") or current_page?("/smsvotes/rawresultspal") or current_page?("/smsvotes/rawresultspre") then %>
-			<li role="presentation" class="active"><a href="/smsvotes/rawresults">Raw Results</a></li>
+			<li role="presentation" class="active"><a href="/smsvotes/rawresults">Polling Station Results</a></li>
 		<%  else %>
-			<li role="presentation"><a href="/smsvotes/rawresults">Raw Results</a></li>
+			<li role="presentation"><a href="/smsvotes/rawresults">Polling Station Results</a></li>
 		<% end %>
 
 	  	<% if current_page?("/smsvotes/collatedresults") or current_page?("/smsvotes/collatedresultsconst") or current_page?("/smsvotes/collatedresultsregional") or current_page?("/smsvotes/collatedresultsnational") then %>
@@ -23,6 +23,18 @@
 	  		<li role="presentation" class="active"><a href="/smsvotes/vizpre">Visualized Results</a></li>
 	  	<%  else %>
 	  		<li role="presentation"><a href="/smsvotes/vizpre">Visualized Results</a></li>
+	  	<% end %>
+
+	  	<% if current_page?("/smsvotes/listofpollingstations") or current_page?("/smsvotes/lpsgar") then %>
+	  		<li role="presentation" class="active"><a href="/smsvotes/listofpollingstations">List of Polling Stations</a></li>
+	  	<%  else %>
+	  		<li role="presentation"><a href="/smsvotes/listofpollingstations">List of Polling Stations</a></li>
+	  	<% end %>
+
+	  	<% if current_page?("/smsvotes/sampledata") then %>
+	  		<li role="presentation" class="active"><a href="/smsvotes/sampledata">Generate / Delete Data</a></li>
+	  	<%  else %>
+	  		<li role="presentation"><a href="/smsvotes/sampledata">Generate  / Delete Data</a></li>
 	  	<% end %>
 
 	</ul>

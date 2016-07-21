@@ -1,0 +1,95 @@
+# Parliamentary
+
+require "open-uri"
+
+# Western
+
+ak = 1
+for x in 1..12	
+open("http://localhost:3000/main/inbound?msisdn=233244100200&to=12027856009&keyword=WR#{ak}&text=WR#{ak}+PAL+AAA+NDC+#{rand(1000)}+BBB+NPP+#{rand(1000)}+CCC+PPP+#{rand(1000)}+DDD+IND+#{rand(1000)}+EEE+CPP+#{rand(1000)}&message-timestamp=2016-07-09+20:19:29")
+ak += 2
+end
+
+# Eastern
+
+bk = 1
+for x in 1..12	
+open("http://localhost:3000/main/inbound?msisdn=233244100200&to=12027856009&keyword=ER#{bk}&text=ER#{bk}+PAL+AAA+NDC+#{rand(1000)}+BBB+NPP+#{rand(1000)}+CCC+PPP+#{rand(1000)}+DDD+IND+#{rand(1000)}+EEE+CPP+#{rand(1000)}&message-timestamp=2016-07-09+20:19:29")
+bk += 2
+end
+
+
+
+# Greater Accra
+
+ck = 1
+for x in 1..12	
+open("http://localhost:3000/main/inbound?msisdn=233244100200&to=12027856009&keyword=GAR#{ck}&text=GAR#{ck}+PAL+AAA+NDC+#{rand(1000)}+BBB+NPP+#{rand(1000)}+CCC+PPP+#{rand(1000)}+DDD+IND+#{rand(1000)}+EEE+CPP+#{rand(1000)}&message-timestamp=2016-07-09+20:19:29")
+ck += 2
+end
+
+
+# Central
+
+dk = 1
+for x in 1..12	
+open("http://localhost:3000/main/inbound?msisdn=233244100200&to=12027856009&keyword=CR#{dk}&text=CR#{dk}+PAL+AAA+NDC+#{rand(1000)}+BBB+NPP+#{rand(1000)}+CCC+PPP+#{rand(1000)}+DDD+IND+#{rand(1000)}+EEE+CPP+#{rand(1000)}&message-timestamp=2016-07-09+20:19:29")
+dk += 2
+end
+
+
+
+# Ashanti
+
+ek = 1
+for x in 1..12	
+open("http://localhost:3000/main/inbound?msisdn=233244100200&to=12027856009&keyword=AR#{ek}&text=AR#{ek}+PAL+AAA+NDC+#{rand(1000)}+BBB+NPP+#{rand(1000)}+CCC+PPP+#{rand(1000)}+DDD+IND+#{rand(1000)}+EEE+CPP+#{rand(1000)}&message-timestamp=2016-07-09+20:19:29")
+ek += 2
+end
+
+
+# Brong-Ahafo
+
+fk = 1
+for x in 1..12	
+open("http://localhost:3000/main/inbound?msisdn=233244100200&to=12027856009&keyword=BAR#{fk}&text=BAR#{fk}+PAL+AAA+NDC+#{rand(1000)}+BBB+NPP+#{rand(1000)}+CCC+PPP+#{rand(1000)}+DDD+IND+#{rand(1000)}+EEE+CPP+#{rand(1000)}&message-timestamp=2016-07-09+20:19:29")
+fk += 2
+end
+
+
+# Volta
+
+gk = 1
+for x in 1..12	
+open("http://localhost:3000/main/inbound?msisdn=233244100200&to=12027856009&keyword=VR#{gk}&text=VR#{gk}+PAL+AAA+NDC+#{rand(1000)}+BBB+NPP+#{rand(1000)}+CCC+PPP+#{rand(1000)}+DDD+IND+#{rand(1000)}+EEE+CPP+#{rand(1000)}&message-timestamp=2016-07-09+20:19:29")
+gk += 2
+end
+
+
+# Volta
+
+hk = 1
+for x in 1..12	
+open("http://localhost:3000/main/inbound?msisdn=233244100200&to=12027856009&keyword=NR#{hk}&text=NR#{hk}+PAL+AAA+NDC+#{rand(1000)}+BBB+NPP+#{rand(1000)}+CCC+PPP+#{rand(1000)}+DDD+IND+#{rand(1000)}+EEE+CPP+#{rand(1000)}&message-timestamp=2016-07-09+20:19:29")
+hk += 2
+end
+
+
+
+# Upper East
+
+ik = 1
+for x in 1..12	
+open("http://localhost:3000/main/inbound?msisdn=233244100200&to=12027856009&keyword=UER#{ik}&text=UER#{ik}+PAL+AAA+NDC+#{rand(1000)}+BBB+NPP+#{rand(1000)}+CCC+PPP+#{rand(1000)}+DDD+IND+#{rand(1000)}+EEE+CPP+#{rand(1000)}&message-timestamp=2016-07-09+20:19:29")
+ik += 2
+end
+
+
+
+# Upper West
+
+jk = 1
+for x in 1..12	
+open("http://localhost:3000/main/inbound?msisdn=233244100200&to=12027856009&keyword=UWR#{jk}&text=UWR#{jk}+PAL+AAA+NDC+#{rand(1000)}+BBB+NPP+#{rand(1000)}+CCC+PPP+#{rand(1000)}+DDD+IND+#{rand(1000)}+EEE+CPP+#{rand(1000)}&message-timestamp=2016-07-09+20:19:29")
+jk += 2
+end

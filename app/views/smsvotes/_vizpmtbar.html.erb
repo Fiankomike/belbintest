@@ -1,12 +1,8 @@
 <div class="container-fluid">
 	<div class="row-fluid">
 
-        <% currentdatetime = DateTime.now %>
-
 		<div id="container" style="width:100%; height:500px;">
 		</div>
-
-		<% currentdatetime = DateTime.now %>
 		
 		<!-- Logic starts here -->
 
@@ -23,7 +19,7 @@
 		
 				  	<% z = Electoraldatum.select('distinct constituency') %>
 				  	<% r = Electoraldatum.select('distinct region') %>
-				  	<% y = Voteresult.select('distinct party') %>
+				  	<% y = Voteresult.select('distinct party').where('typeofelection = "PAL"') %>
 				  	<% @partyname = Hash.new %>
 				  	<% @regionparty = Hash.new %>
 				  	<% @regionpartyvalue = Hash.new %>
@@ -62,7 +58,7 @@
 						  			<% tempvar = "#{xregion.region}-#{yparty.party}" %>
 						  			<% if (@regionexists[@varcount2].include? xregion.region and  @regionexists[@varcount2].include? yparty.party) then %>	
 						  				<% @regionparty[tempvar] += 1 %>
-						  				<% "#{tempvar} #{yparty.party} #{@regionparty[tempvar]}" %></td>
+						  				<% "#{tempvar} #{yparty.party} #{@regionparty[tempvar]}" %>
 						  				<% @regionpartyvalue[tempvar] = [] %>
 						  				<% @regionpartyvalue[tempvar].push(@regionparty[tempvar]) %>
 						  			<% end %>
