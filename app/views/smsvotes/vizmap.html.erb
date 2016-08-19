@@ -5,12 +5,9 @@
 		<%= render('layouts/menu') %>
 	</div>
 
-	<% receivedps = Electoraldatum.joins(:voteresults).select('distinct pscode').where('typeofelection = "PAL"').count %>
-    <% totalps = Electoraldatum.select('distinct edpscode').count %>
-
     <div class="row-fluid">
         <div class="col-lg-10">
-            <h1 align="center">Results Per Region<span class="badge"><%= "#{receivedps} out of #{totalps} polling stations" %></span><h1> 
+            <h1 align="center">Results Per Region<h1> 
         </div>
 
         <div class="col-lg-2" style="margin-top: 15px"> 
