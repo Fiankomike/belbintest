@@ -1,0 +1,32 @@
+<% @PageTitle = "Overview of Parliamentary Results" %>
+
+<div class="container-fluid">
+	<div class="row-fluid">
+		<%= render('layouts/menu') %>
+	</div>
+
+	<% receivedps = Electoraldatum.joins(:voteresults).select('distinct pscode').where('typeofelection = "PAL"').count %>
+    <% totalps = Electoraldatum.select('distinct edpscode').count %>
+
+    <div class="row-fluid">
+        <div class="col-lg-10">
+            <h1 align="center">Results Per Region<span class="badge"><%= "#{receivedps} out of #{totalps} polling stations" %></span><h1> 
+        </div>
+
+        <div class="col-lg-2" style="margin-top: 15px"> 
+            <!-- Large button group -->
+            <%= render('layouts/graphsmenu') %>
+        </div>
+    </div>
+
+
+	<div class="row-fluid">
+		<div class="col-lg-6">
+			<%= render('smsvotes/vizmappre') %>
+		</div>
+
+		<div class="col-lg-6">
+			<%= render('smsvotes/vizmappmt') %>
+		</div>
+    </div>
+</div>

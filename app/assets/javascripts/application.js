@@ -28,5 +28,6 @@
 //= require highcharts/modules/heatmap
 //= require highcharts/modules/no-data-to-display
 //= require highcharts/modules/offline-exporting
+//= require highcharts/modules/map
 //= require_tree .
 
